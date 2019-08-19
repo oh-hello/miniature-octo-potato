@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+  build:
+    commands:
+      - echo 'hello'
+      - mkdir lambda_deployment_pkg
+      - zip lambda_deployment_pkg/hello.zip code/__init__.py
+      - aws s3 cp lambda_deployment_pkg s3://mycodepiplinebucket --recursive --metadata GIT_SHA=$CODEBUILD_SOURCE_VERSION
